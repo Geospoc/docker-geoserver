@@ -1,3 +1,6 @@
+Based on: https://github.com/kartoza/docker-geoserver
+
+
 # docker-geoserver
 
 A simple docker container that runs GeoServer influenced by this docker
@@ -12,7 +15,7 @@ get our docker trusted build like this:
 
 
 ```shell
-docker pull kartoza/geoserver
+docker pull geospoc/geoserver
 ```
  
 ### Setting Tomcat properties during build
@@ -29,7 +32,7 @@ You can change the Java memory allocation using the following build arguments
 - `MAXIMUM_MEMORY` Maximum Memory that Java can allocate, default `4G`.
 
 ```shell
-docker build --build-arg INITIAL_MEMORY=1GB -t kartoza/geoserver .
+docker build --build-arg INITIAL_MEMORY=1GB -t geospoc/geoserver .
 ```
 
 > These build arguments operates on the `-Xms` and `-Xmx` options of the Java Virtual Machine
@@ -73,7 +76,7 @@ in the licencing terms from Oracle which require users to login to their site.
 To replace OpenJDK Java with the Oracle JDK, set build-arg `ORACLE_JDK=true`:
 
 ```shell
-docker build --build-arg ORACLE_JDK=true --build-arg GS_VERSION=2.13.0 -t kartoza/geoserver .
+docker build --build-arg ORACLE_JDK=true --build-arg GS_VERSION=2.13.0 -t geospoc/geoserver .
 ```
 
 ### Building with plugins
@@ -89,7 +92,7 @@ To remove Tomcat extras including docs, examples, and the manager webapp, set th
 `TOMCAT_EXTRAS` build-arg to `false`:
 
 ```shell
-docker build --build-arg TOMCAT_EXTRAS=false --build-arg GS_VERSION=2.13.0 -t kartoza/geoserver .
+docker build --build-arg TOMCAT_EXTRAS=false --build-arg GS_VERSION=2.13.0 -t geospoc/geoserver .
 ```
 
 ### Building with specific version of  Tomcat
@@ -99,7 +102,7 @@ To build using a specific tagged release for tomcat image set the
 to choose which tag you need to build against.
 
 ```shell
-docker build --build-arg IMAGE_VERSION=8-jre8 --build-arg GS_VERSION=2.13.0 -t kartoza/geoserver:2.13.0 .
+docker build --build-arg IMAGE_VERSION=8-jre8 --build-arg GS_VERSION=2.13.0 -t geospoc/geoserver:2.13.0 .
 ```
 
 ### Building with file system overlays (advanced)
@@ -123,7 +126,7 @@ container do:
 
 ```shell
 docker run --name "postgis" -d -t kartoza/postgis:9.4-2.1
-docker run --name "geoserver"  --link postgis:postgis -p 8080:8080 -d -t kartoza/geoserver
+docker run --name "geoserver"  --link postgis:postgis -p 8080:8080 -d -t geospoc/geoserver
 ```
 
 You can also use the following environment variables to pass a 
@@ -150,7 +153,7 @@ The default GeoServer user is 'admin' and the password is 'geoserver'. You can p
 GEOSERVER_ADMIN_PASSWORD to  change it on runtime.
 ```shell
 
-docker run --name "geoserver"  -e GEOSERVER_ADMIN_PASSWORD=myawesomegeoserver -p 8080:8080 -d -t kartoza/geoserver
+docker run --name "geoserver"  -e GEOSERVER_ADMIN_PASSWORD=myawesomegeoserver -p 8080:8080 -d -t geospoc/geoserver
 ```
 
 ## Run (automated using docker-compose)
@@ -260,14 +263,14 @@ wget http://build.geonode.org/geoserver/latest/data-2.13.x.zip
 unzip data-2.13.x.zip -d ~/geoserver_data
 cp scripts/controlflow.properties ~/geoserver_data
 chmod -R a+rwx ~/geoserver_data
-docker run -d -p 8580:8080 --name "geoserver" -v $HOME/geoserver_data:/opt/geoserver/data_dir kartoza/geoserver:${GS_VERSION}
+docker run -d -p 8580:8080 --name "geoserver" -v $HOME/geoserver_data:/opt/geoserver/data_dir geospoc/geoserver:${GS_VERSION}
 
 ```
 Create an empty data directory to use to persist your data.
 
 ```shell
 mkdir -p ~/geoserver_data && chmod -R a+rwx ~/geoserver_data
-docker run -d -v $HOME/geoserver_data:/opt/geoserver/data_dir kartoza/geoserver
+docker run -d -v $HOME/geoserver_data:/opt/geoserver/data_dir geospoc/geoserver
 ```
 
 ### Control flow properties
