@@ -6,7 +6,7 @@ FROM tomcat:$IMAGE_VERSION
 MAINTAINER Devdatta Tengshe<devdatta@geospoc.com>
 
 ## The Geoserver version
-ARG GS_VERSION=2.15.2
+ARG GS_VERSION=2.16.2
 
 ## Would you like to use Oracle JDK
 ARG ORACLE_JDK=false
